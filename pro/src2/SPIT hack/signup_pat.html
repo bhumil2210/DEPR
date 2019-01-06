@@ -1,0 +1,693 @@
+<html>
+<head>
+	<link rel="stylesheet" href="css/bootstrap.min.css">
+
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <link rel="stylesheet" href="style.css">
+    <script src="./node_modules/web3/dist/web3.min.js"></script>
+    <script src="https://cdn.ethers.io/scripts/ethers-v4.min.js"
+        charset="utf-8"
+        type="text/javascript"></script>
+
+    <script>
+      function go()
+       {
+       window.open('patient.html');
+        }
+    </script>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+
+    <style>
+    	
+    	/*
+ * Specific styles of signin component
+ */
+/*
+ * General styles
+ */
+body, html {
+    height: 100%;
+    background-repeat: no-repeat;
+    /*background-image: linear-gradient(rgb(104, 145, 162), rgb(12, 97, 33));*/
+}
+
+.card-container.card {
+    max-width: 350px;
+    padding: 40px 40px;
+}
+
+.btn {
+    font-weight: 700;
+    height: 36px;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
+    cursor: default;
+}
+
+/*
+ * Card component
+ */
+.card {
+    background-color: #F7F7F7;
+    /* just in case there no content*/
+    padding: 20px 25px 30px;
+    margin: 0 auto 25px;
+    margin-top: 50px;
+    /* shadows and rounded borders */
+    -moz-border-radius: 2px;
+    -webkit-border-radius: 2px;
+    border-radius: 2px;
+    -moz-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+    -webkit-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+}
+
+.profile-img-card {
+    width: 96px;
+    height: 96px;
+    margin: 0 auto 10px;
+    display: block;
+    -moz-border-radius: 50%;
+    -webkit-border-radius: 50%;
+    border-radius: 50%;
+}
+
+/*
+ * Form styles
+ */
+.profile-name-card {
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+    margin: 10px 0 0;
+    min-height: 1em;
+}
+
+.reauth-email {
+    display: block;
+    color: #404040;
+    line-height: 2;
+    margin-bottom: 10px;
+    font-size: 14px;
+    text-align: center;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+.form-signin #inputEmail,
+.form-signin #inputPassword {
+    direction: ltr;
+    height: 44px;
+    font-size: 16px;
+}
+
+.form-signin input[type=email],
+.form-signin input[type=password],
+.form-signin input[type=text],
+.form-signin button {
+    width: 100%;
+    display: block;
+    margin-bottom: 10px;
+    z-index: 1;
+    position: relative;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+.form-signin .form-control:focus {
+    border-color: rgb(104, 145, 162);
+    outline: 0;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgb(104, 145, 162);
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgb(104, 145, 162);
+}
+
+.btn.btn-signin {
+    /*background-color: #4d90fe; */
+    background-color: rgb(104, 145, 162);
+    /* background-color: linear-gradient(rgb(104, 145, 162), rgb(12, 97, 33));*/
+    padding: 0px;
+    font-weight: 700;
+    font-size: 14px;
+    height: 36px;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+    border: none;
+    -o-transition: all 0.218s;
+    -moz-transition: all 0.218s;
+    -webkit-transition: all 0.218s;
+    transition: all 0.218s;
+}
+
+.btn.btn-signin:hover,
+.btn.btn-signin:active,
+.btn.btn-signin:focus {
+    background-color: rgb(12, 97, 33);
+}
+
+.forgot-password {
+    color: rgb(104, 145, 162);
+}
+
+.forgot-password:hover,
+.forgot-password:active,
+.forgot-password:focus{
+    color: rgb(12, 97, 33);
+}
+    </style>
+
+</head>
+
+
+<body>
+ <div class="container">
+        <div class="card card-container">
+            <!-- <img class="profile-img-card" src="//lh3.googleusercontent.com/-6V8xOA6M7BA/AAAAAAAAAAI/AAAAAAAAAAA/rzlHcD0KYwo/photo.jpg?sz=120" alt="" /> -->
+            
+            <p id="profile-name" class="profile-name-card">Patient's Sign-in</p>
+            <br>
+
+            <form class="form-signin" action="" id="prospects_form">
+                <input type="email" id="email" class="form-control" placeholder="Email Id" required autofocus>
+                
+                <input type="password" id="password" class="form-control" placeholder="Password" required>
+                
+                <input type="text" id="name" class="form-control" placeholder="Name" required >
+                
+                <input type="text" id="contact" class="form-control" placeholder="Contact No." required>
+                 
+                <input id="male" type="radio" value="Male" name="gender"  >Male<br>
+                <input id="female" type="radio" value="Female" name="gender"  >Female<br>
+                
+                <input type="text" id="age" class="form-control" placeholder="Age" required>
+                <br>
+                <button id="signup_btn" class="btn btn-lg btn-primary btn-block btn-signin" onclick="go()" type="submit">Sign in</button>
+            </form><!-- /form -->
+            
+        </div><!-- /card-container -->
+    </div><!-- /container -->
+</body>
+    <script>
+
+
+    if (typeof web3 !== "undefined") {
+  console.warn("Using web3 detected from external source like Metamask")
+  // If there is a web3 instance(in Mist/Metamask), then we use its provider to create our web3object
+  window.web3 = new Web3(web3.currentProvider)
+} else {
+  console.warn("No web3 detected.")
+  // fallback - use your fallback strategy (local node / hosted node + in-dapp id mgmt / fail)
+  window.web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"))
+}
+
+console.log(web3.currentProvider);
+    web3 = new Web3(web3.currentProvider);
+    web3.currentProvider.enable();
+    window.setTimeout(function(){
+      console.log(web3.eth.accounts[0]);
+},2000);
+
+  var CoursetroContract = web3.eth.contract([
+    {
+        "constant": false,
+        "inputs": [
+            {
+                "name": "patient_address",
+                "type": "address"
+            },
+            {
+                "name": "d_type",
+                "type": "string"
+            },
+            {
+                "name": "medicine_taking",
+                "type": "string"
+            },
+            {
+                "name": "symp1",
+                "type": "string"
+            },
+            {
+                "name": "symp2",
+                "type": "string"
+            },
+            {
+                "name": "symp3",
+                "type": "string"
+            },
+            {
+                "name": "ipfs_hashes",
+                "type": "bytes32[4]"
+            }
+        ],
+        "name": "add_new_case",
+        "outputs": [],
+        "payable": false,
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "constant": false,
+        "inputs": [
+            {
+                "name": "username",
+                "type": "string"
+            },
+            {
+                "name": "passwd",
+                "type": "bytes32"
+            },
+            {
+                "name": "doc_id",
+                "type": "address"
+            },
+            {
+                "name": "doc_name",
+                "type": "string"
+            }
+        ],
+        "name": "add_new_doctor",
+        "outputs": [],
+        "payable": false,
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "constant": false,
+        "inputs": [
+            {
+                "name": "username",
+                "type": "string"
+            },
+            {
+                "name": "passwd",
+                "type": "bytes32"
+            },
+            {
+                "name": "patient_address",
+                "type": "address"
+            },
+            {
+                "name": "patient_name",
+                "type": "string"
+            },
+            {
+                "name": "contact_no",
+                "type": "uint256"
+            }
+        ],
+        "name": "add_new_patient",
+        "outputs": [
+            {
+                "name": "pt_address",
+                "type": "address"
+            }
+        ],
+        "payable": false,
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "constant": false,
+        "inputs": [
+            {
+                "name": "company_address",
+                "type": "address"
+            },
+            {
+                "name": "company_name",
+                "type": "string"
+            },
+            {
+                "name": "domain",
+                "type": "string"
+            },
+            {
+                "name": "description",
+                "type": "string"
+            },
+            {
+                "name": "future_scope",
+                "type": "string"
+            }
+        ],
+        "name": "broadcast_research",
+        "outputs": [],
+        "payable": false,
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "constant": false,
+        "inputs": [
+            {
+                "name": "patient_address",
+                "type": "address"
+            },
+            {
+                "name": "case_id",
+                "type": "uint256"
+            },
+            {
+                "name": "doc_id",
+                "type": "address"
+            }
+        ],
+        "name": "give_access_to_doctor",
+        "outputs": [
+            {
+                "name": "test123",
+                "type": "uint256"
+            },
+            {
+                "name": "d_p",
+                "type": "address"
+            },
+            {
+                "name": "d_c",
+                "type": "uint256"
+            }
+        ],
+        "payable": false,
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "constant": false,
+        "inputs": [
+            {
+                "name": "username",
+                "type": "string"
+            },
+            {
+                "name": "password",
+                "type": "bytes32"
+            },
+            {
+                "name": "user_type",
+                "type": "string"
+            }
+        ],
+        "name": "login_func",
+        "outputs": [
+            {
+                "name": "val",
+                "type": "string"
+            }
+        ],
+        "payable": false,
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "constant": true,
+        "inputs": [
+            {
+                "name": "a",
+                "type": "string"
+            },
+            {
+                "name": "b",
+                "type": "string"
+            }
+        ],
+        "name": "compareStringsbyBytes",
+        "outputs": [
+            {
+                "name": "",
+                "type": "bool"
+            }
+        ],
+        "payable": false,
+        "stateMutability": "pure",
+        "type": "function"
+    },
+    {
+        "constant": true,
+        "inputs": [
+            {
+                "name": "doctorid",
+                "type": "address"
+            }
+        ],
+        "name": "doctor_detail",
+        "outputs": [
+            {
+                "name": "d_id",
+                "type": "address"
+            },
+            {
+                "name": "d_name",
+                "type": "string"
+            },
+            {
+                "name": "x",
+                "type": "address"
+            },
+            {
+                "name": "y",
+                "type": "address"
+            }
+        ],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "constant": true,
+        "inputs": [
+            {
+                "name": "doc_id",
+                "type": "address"
+            }
+        ],
+        "name": "get_doctor_records",
+        "outputs": [
+            {
+                "name": "t",
+                "type": "uint256"
+            },
+            {
+                "name": "p",
+                "type": "address"
+            },
+            {
+                "name": "c",
+                "type": "uint256"
+            },
+            {
+                "name": "names",
+                "type": "bytes32[4]"
+            },
+            {
+                "name": "contacts",
+                "type": "uint256[1]"
+            },
+            {
+                "name": "disease_types",
+                "type": "bytes32[4]"
+            },
+            {
+                "name": "medicines",
+                "type": "bytes32[4]"
+            },
+            {
+                "name": "case1_hashes",
+                "type": "bytes32[4]"
+            },
+            {
+                "name": "case2_hashes",
+                "type": "bytes32[4]"
+            },
+            {
+                "name": "case3_hashes",
+                "type": "bytes32[4]"
+            }
+        ],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "constant": true,
+        "inputs": [
+            {
+                "name": "patient_address",
+                "type": "address"
+            }
+        ],
+        "name": "get_patient_records",
+        "outputs": [
+            {
+                "name": "name",
+                "type": "string"
+            },
+            {
+                "name": "c_no",
+                "type": "uint256"
+            },
+            {
+                "name": "c_id",
+                "type": "uint256[10]"
+            },
+            {
+                "name": "d_type",
+                "type": "bytes32[10]"
+            },
+            {
+                "name": "m_take",
+                "type": "bytes32[10]"
+            },
+            {
+                "name": "sym1",
+                "type": "bytes32[10]"
+            },
+            {
+                "name": "sym2",
+                "type": "bytes32[10]"
+            },
+            {
+                "name": "sym3",
+                "type": "bytes32[10]"
+            },
+            {
+                "name": "case1_hashes",
+                "type": "bytes32[4]"
+            },
+            {
+                "name": "case2_hashes",
+                "type": "bytes32[4]"
+            },
+            {
+                "name": "case3_hashes",
+                "type": "bytes32[4]"
+            }
+        ],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "constant": true,
+        "inputs": [],
+        "name": "get_research_data",
+        "outputs": [
+            {
+                "name": "company_name",
+                "type": "bytes32[10]"
+            },
+            {
+                "name": "domain",
+                "type": "bytes32[10]"
+            },
+            {
+                "name": "description",
+                "type": "bytes32[10]"
+            },
+            {
+                "name": "future_scope",
+                "type": "bytes32[10]"
+            }
+        ],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "constant": true,
+        "inputs": [
+            {
+                "name": "source",
+                "type": "string"
+            }
+        ],
+        "name": "stringToBytes32",
+        "outputs": [
+            {
+                "name": "result",
+                "type": "bytes32"
+            }
+        ],
+        "payable": false,
+        "stateMutability": "pure",
+        "type": "function"
+    }
+]);
+
+    var Coursetro = CoursetroContract.at('0xf2b6d3c638a4b6650ef0ed4c5a775780e08ee91c');
+    console.log(Coursetro);
+
+
+// function sign_up(){
+
+//     var username = document.getElementById('email').value;
+//     var password = document.getElementById('password').value;
+//     var name = document.getElementById('name').value;
+//     var contact = document.getElementById('contact').value;
+//     var age = document.getElementById('age').value;
+//     if(document.getElementById('male').checked)
+//         var gender = "male";
+//     else
+//         var gender = "female";
+
+//     window.setTimeout(function(){
+//         Coursetro.add_new_patient(username,password,ethers.Wallet.createRandom().address,name,contact,function(error){
+//         if(!error)
+//             console.log("true");
+//         else
+//             console.log("false");
+//         });
+//     },5000);
+
+// }
+
+const a = document.getElementById('signup_btn');
+
+
+// $("#prospects_form").submit(function(e) {
+//     e.preventDefault();
+// });
+
+a.addEventListener('click', e => {
+
+    var username = document.getElementById('email').value;
+    var password = document.getElementById('password').value;
+    var name = document.getElementById('name').value;
+    var contact = document.getElementById('contact').value;
+    var age = document.getElementById('age').value;
+    if(document.getElementById('male').checked)
+        var gender = "male";
+    else
+        var gender = "female";
+
+    window.setTimeout(function(){
+        console.log(ethers.Wallet.createRandom().address);
+        Coursetro.add_new_patient(username,password,ethers.Wallet.createRandom().address,name,contact,function(error,result){
+        console.log("result = ",result);
+        if(!error)
+            console.log("true");
+        else
+            console.log("false");
+        });
+    },5000);
+
+});
+
+
+    </script>
+</html>

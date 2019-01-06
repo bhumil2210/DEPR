@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <!-- <script src="./node_modules/web3/dist/web3.min.js"></script> -->
+
+	<!-- <script src="https://unpkg.com/ipfs/dist/index.js"></script> -->
+	<script src="https://cdn.jsdelivr.net/npm/ipfs/dist/index.js"></script>
+    <!-- This exposes the library as a global variable: ethers -->
+<script src="https://cdn.ethers.io/scripts/ethers-v4.min.js"
+        charset="utf-8"
+        type="text/javascript">
+</script>
+    <script>
+
+	const node = new Ipfs()
+	// let mnemonic = "invest taste option ship toward stomach business mandate sponsor chef unlock limb";
+	// let mnemonicWallet = ethers.Wallet.fromMnemonic(mnemonic);
+
+	a = ethers.Wallet.createRandom().address;
+	console.log(a);
+	// console.log(mnemonicWallet);
+	const data = 'Hello, <YOUR NAME HERE>'
+
+// var getFileBlob = function (url, cb) {
+//     var xhr = new XMLHttpRequest();
+//     xhr.open("GET", url);
+//     xhr.responseType = "blob";
+//     xhr.addEventListener('load', function() {
+//         cb(xhr.response);
+//     });
+//     xhr.send();
+// };
+
+// var blobToFile = function (blob, name) {
+//         blob.lastModifiedDate = new Date();
+//         blob.name = name;
+//         return blob;
+// };
+
+// var getFileObject = function(filePathOrUrl, cb) {
+//        getFileBlob(filePathOrUrl, function (blob) {
+//           cb(blobToFile(blob, 'test.jpg'));
+//        });
+// };
+
+// getFileObject('test.png', function (fileObject) {
+// 	 var file = fileObject;
+// 	 console.log("file = ",file);
+// 	 fr = new FileReader();
+//      fr.readAsBinaryString(file);
+// 	 console.log("fr.result");
+// 	 fr.onload = function(){
+// 	 	//console.log(fr.result)
+
+// 	 	const data = {buffer: fr.result.buffer};
+// 	 		// once the node is ready
+// 	node.once('ready', () => {
+
+// 		const files = [
+//         {
+//             path: 'image.png',
+//             content: data
+//         }
+//         ]	
+
+// 	  node.files.add(files, (err, files) => {
+// 	    if (err) {console.error(err)}
+// 	    else{
+
+// 	    console.log(files[0].hash)
+// 		ipfsPath = files[0].hash
+//         ipfs.files.cat(ipfsPath, function (err, file) {
+//         if (err) {
+//             throw err
+//         }
+//         img = file.toString("base64");
+//         document.getElementById("design_display").src= "data:image/png;base64," + img;
+//         })
+//     	}
+// 	  })
+
+// 	// node.files.cat('QmPChd2hVbrJ6bfo3WBcTW4iZnpHm8TEzWkLHmLpXhF68A', function (err, data) {
+//  //      if (err) {
+//  //        return console.error('Error - ipfs files cat', err, res)
+//  //      }
+ 
+//  //      img = data.toString();
+//  //      console.log(img);
+//  //      document.getElementById("design_display").src= "data:image/png;base64," + img;
+//  //      })
+// 	})
+
+// 	 }
+	 
+// });
+
+
+	function ascii_to_hexa(str)
+  	{
+	var arr1 = [];
+	for (var n = 0, l = str.length; n < l; n ++) 
+     {
+		var hex = Number(str.charCodeAt(n)).toString(16);
+		arr1.push(hex);
+	 }
+	return arr1.join('');
+	}
+	console.log(ascii_to_hexa('QmWmyoMoctfbAaiEs2G46gpeUmhqFRDW6KWo64y5r581Vz'))
+
+	  // Is there an injected web3 instance?
+	  if (typeof web3 !== "undefined") {
+	    console.warn("Using web3 detected from external source like Metamask")
+	    // If there is a web3 instance(in Mist/Metamask), then we use its provider to create our web3object
+	    window.web3 = new Web3(web3.currentProvider)
+	  } else {
+	    console.warn("No web3 detected.")
+	    // fallback - use your fallback strategy (local node / hosted node + in-dapp id mgmt / fail)
+	    window.web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"))
+	  }
+
+    console.log(web3.currentProvider);
+    web3 = new Web3(web3.currentProvider);
+    web3.currentProvider.enable();
+    window.setTimeout(function(){
+    	console.log(web3.eth.accounts[0]);
+    },10000);
+    console.log(web3.eth.accounts[0]);
+    console.log(web3.eth.personal.newAccount()([
+    	{
+	    address: "0xb8CE9ab6943e0eCED004cDe8e3bBed6568B2Fa01",
+	    privateKey: "0x348ce564d427a3311b6536bbcff9390d69395b06ed6c486954e971d960fe8709",
+	    
+		}
+    	]));
+    web3.eth.defaultAccount = "0x0638E1574728b6D862dd5d3A3E0942c3be47D996";
+
+
+    var CoursetroContract = web3.eth.contract([
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "value",
+				"type": "string"
+			}
+		],
+		"name": "fetch_value",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "give_result",
+		"outputs": [
+			{
+				"name": "retval",
+				"type": "string"
+			},
+			{
+				"name": "given",
+				"type": "string"
+			},
+			{
+				"name": "testing_bytes32",
+				"type": "bytes32[4]"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "source",
+				"type": "string"
+			}
+		],
+		"name": "stringToBytes32",
+		"outputs": [
+			{
+				"name": "result",
+				"type": "bytes32"
+			}
+		],
+		"payable": false,
+		"stateMutability": "pure",
+		"type": "function"
+	}
+]);
+
+    var Coursetro = CoursetroContract.at('0x9a74eb98136c20a81fa9deec359e52d5a1dab1e3');
+    console.log(Coursetro);
+    var a = 635;
+    console.log("**********************");
+
+    console.log(web3.toAscii('0x6572656600000000000000000000000000000000000000000000000000000000'));
+    // i = 0;
+    // window.setTimeout(function(){
+    //   node.add(new node.types.Buffer('Hello world!'), (err, filesAdded) => {
+    //   if (err) {
+    //     return console.error('Error - ipfs add', err, res)
+    //   }
+
+    //   filesAdded.forEach((file) => console.log('successfully stored', file.hash))
+    // 	})
+    // },7000);
+//["0x63616e6469646174653100000000000000000000000000000000000000000000","0x6332000000000000000000000000000000000000000000000000000000000000","0x6333000000000000000000000000000000000000000000000000000000000000","0x6333000000000000000000000000000000000000000000000000000000000000"]
+
+
+
+
+function lzw_encode(s) {
+    var dict = {};
+    var data = (s + "").split("");
+    var out = [];
+    var currChar;
+    var phrase = data[0];
+    var code = 256;
+    for (var i=1; i<data.length; i++) {
+        currChar=data[i];
+        if (dict[phrase + currChar] != null) {
+            phrase += currChar;
+        }
+        else {
+            out.push(phrase.length > 1 ? dict[phrase] : phrase.charCodeAt(0));
+            dict[phrase + currChar] = code;
+            code++;
+            phrase=currChar;
+        }
+    }
+    out.push(phrase.length > 1 ? dict[phrase] : phrase.charCodeAt(0));
+    for (var i=0; i<out.length; i++) {
+        out[i] = String.fromCharCode(out[i]);
+    }
+    return out.join("");
+}
+
+// Decompress an LZW-encoded string
+function lzw_decode(s) {
+    var dict = {};
+    var data = (s + "").split("");
+    var currChar = data[0];
+    var oldPhrase = currChar;
+    var out = [currChar];
+    var code = 256;
+    var phrase;
+    for (var i=1; i<data.length; i++) {
+        var currCode = data[i].charCodeAt(0);
+        if (currCode < 256) {
+            phrase = data[i];
+        }
+        else {
+           phrase = dict[currCode] ? dict[currCode] : (oldPhrase + currChar);
+        }
+        out.push(phrase);
+        currChar = phrase.charAt(0);
+        dict[code] = oldPhrase + currChar;
+        code++;
+        oldPhrase = phrase;
+    }
+    return out.join("");
+}
+
+    Coursetro.fetch_value(parseInt(a),function(error){
+    	if(error){
+    		console.log(error);
+    	}
+    	else{
+    	i=0;
+    	while(i<500000000){
+    		i++;
+    	}
+    	Coursetro.give_result(function(error,result){
+    	if(!error){
+    		console.log("full result = ",result);
+    		console.log("result = ",result.c[0],result.c[1],result.c[2]);
+    	}
+    	else{
+    		console.log("error",error);
+    	}
+    });
+
+    	}
+    });
+    console.log("----------------------");
+
+
+
+    </script>
+
+</head>
+<body>
+
+<img id="design_display" width=100px height=100px>
+
+</body>
+</html>

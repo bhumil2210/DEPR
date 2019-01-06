@@ -1,0 +1,523 @@
+<html>
+      <head>
+        
+          <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+          <style>
+            .card-deck{
+              padding: 20px;
+            }
+            .card{
+              padding: 20px;
+            }
+
+          </style>
+          <script src="./node_modules/web3/dist/web3.min.js"></script>
+<script>
+        
+        // Is there an injected web3 instance?
+if (typeof web3 !== "undefined") {
+  console.warn("Using web3 detected from external source like Metamask")
+  // If there is a web3 instance(in Mist/Metamask), then we use its provider to create our web3object
+  window.web3 = new Web3(web3.currentProvider)
+} else {
+  console.warn("No web3 detected.")
+  // fallback - use your fallback strategy (local node / hosted node + in-dapp id mgmt / fail)
+  window.web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"))
+}
+
+console.log(web3.currentProvider);
+    web3 = new Web3(web3.currentProvider);
+    web3.currentProvider.enable();
+    window.setTimeout(function(){
+      console.log(web3.eth.accounts[0]);
+      after_getting_account(web3.eth.accounts[0]);
+},5000);
+
+function after_getting_account(account){
+  var CoursetroContract = web3.eth.contract([
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "doc_id",
+        "type": "address"
+      },
+      {
+        "name": "doc_name",
+        "type": "string"
+      }
+    ],
+    "name": "add_new_doctor",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "patient_address",
+        "type": "address"
+      },
+      {
+        "name": "d_type",
+        "type": "string"
+      },
+      {
+        "name": "medicine_taking",
+        "type": "string"
+      },
+      {
+        "name": "symp1",
+        "type": "string"
+      },
+      {
+        "name": "symp2",
+        "type": "string"
+      },
+      {
+        "name": "symp3",
+        "type": "string"
+      },
+      {
+        "name": "ipfs_hashes",
+        "type": "bytes32[4]"
+      }
+    ],
+    "name": "add_new_case",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "company_address",
+        "type": "address"
+      },
+      {
+        "name": "company_name",
+        "type": "string"
+      },
+      {
+        "name": "domain",
+        "type": "string"
+      },
+      {
+        "name": "description",
+        "type": "string"
+      },
+      {
+        "name": "future_scope",
+        "type": "string"
+      }
+    ],
+    "name": "broadcast_research",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "patient_address",
+        "type": "address"
+      },
+      {
+        "name": "case_id",
+        "type": "uint256"
+      },
+      {
+        "name": "doc_id",
+        "type": "address"
+      }
+    ],
+    "name": "give_access_to_doctor",
+    "outputs": [
+      {
+        "name": "test123",
+        "type": "uint256"
+      },
+      {
+        "name": "d_p",
+        "type": "address"
+      },
+      {
+        "name": "d_c",
+        "type": "uint256"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [],
+    "name": "get_research_data",
+    "outputs": [
+      {
+        "name": "company_name",
+        "type": "bytes32[10]"
+      },
+      {
+        "name": "domain",
+        "type": "bytes32[10]"
+      },
+      {
+        "name": "description",
+        "type": "bytes32[10]"
+      },
+      {
+        "name": "future_scope",
+        "type": "bytes32[10]"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "name": "doctorid",
+        "type": "address"
+      }
+    ],
+    "name": "doctor_detail",
+    "outputs": [
+      {
+        "name": "d_id",
+        "type": "address"
+      },
+      {
+        "name": "d_name",
+        "type": "string"
+      },
+      {
+        "name": "x",
+        "type": "address"
+      },
+      {
+        "name": "y",
+        "type": "address"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "name": "patient_address",
+        "type": "address"
+      }
+    ],
+    "name": "get_patient_records",
+    "outputs": [
+      {
+        "name": "name",
+        "type": "string"
+      },
+      {
+        "name": "c_no",
+        "type": "uint256"
+      },
+      {
+        "name": "c_id",
+        "type": "uint256[10]"
+      },
+      {
+        "name": "d_type",
+        "type": "bytes32[10]"
+      },
+      {
+        "name": "m_take",
+        "type": "bytes32[10]"
+      },
+      {
+        "name": "sym1",
+        "type": "bytes32[10]"
+      },
+      {
+        "name": "sym2",
+        "type": "bytes32[10]"
+      },
+      {
+        "name": "sym3",
+        "type": "bytes32[10]"
+      },
+      {
+        "name": "case1_hashes",
+        "type": "bytes32[4]"
+      },
+      {
+        "name": "case2_hashes",
+        "type": "bytes32[4]"
+      },
+      {
+        "name": "case3_hashes",
+        "type": "bytes32[4]"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "patient_address",
+        "type": "address"
+      },
+      {
+        "name": "patient_name",
+        "type": "string"
+      },
+      {
+        "name": "contact_no",
+        "type": "uint256"
+      }
+    ],
+    "name": "add_new_patient",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "name": "doc_id",
+        "type": "address"
+      }
+    ],
+    "name": "get_doctor_records",
+    "outputs": [
+      {
+        "name": "t",
+        "type": "uint256"
+      },
+      {
+        "name": "p",
+        "type": "address"
+      },
+      {
+        "name": "c",
+        "type": "uint256"
+      },
+      {
+        "name": "names",
+        "type": "bytes32[4]"
+      },
+      {
+        "name": "contacts",
+        "type": "uint256[1]"
+      },
+      {
+        "name": "disease_types",
+        "type": "bytes32[4]"
+      },
+      {
+        "name": "medicines",
+        "type": "bytes32[4]"
+      },
+      {
+        "name": "case1_hashes",
+        "type": "bytes32[4]"
+      },
+      {
+        "name": "case2_hashes",
+        "type": "bytes32[4]"
+      },
+      {
+        "name": "case3_hashes",
+        "type": "bytes32[4]"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "name": "source",
+        "type": "string"
+      }
+    ],
+    "name": "stringToBytes32",
+    "outputs": [
+      {
+        "name": "result",
+        "type": "bytes32"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "pure",
+    "type": "function"
+  }
+]);
+
+    var Coursetro = CoursetroContract.at('0x2503b37e9316131044e544ac4d970b652b279073');
+    console.log(Coursetro);
+
+    Coursetro.get_patient_records(account,function(error,result){
+      if(!error){
+        console.log("result = ",result);
+        console.log("patient name = ",result[0])
+        document.getElementById('patient_name').innerHTML = result[0];
+        document.getElementById('patient_desc').innerHTML =`
+                  Patient id:`+account+`
+                  Address:2/303,Shubham Apts,Thakur Village,Kandivali East,Mumbai
+                  Gender:F
+                  Contact:`+result[1].c[0];
+
+        for(var i=1;i<4;i++){
+          var b = "  malaria";
+            console.log("d = ",Bytes32ToString(result[3][i]));
+            var a = Bytes32ToString(result[3][i]).toString();
+            a.replace(" ","");
+
+            var d = `
+              <div class="card">
+              
+              <div class="card-body">
+                <h5 class="card-title" style="color:#007bff;">`;
+
+            var e = `</h5>
+                <p class="card-text">
+                  <b>Symptoms:</b>`;
+
+            var f = `
+                  <br>
+                  <b>Consulted doctor:</b>Dr.Lionel Dsuoza
+                  <br>
+                  <a href="file_upload1.html" class="card-link">View records</a>
+
+                </p>
+                <p class="card-text"><small class="text-muted">Date:13/03/2018</small></p>
+              </div>
+            </div>`;
+
+
+            document.getElementById('cases').innerHTML += d.concat(Bytes32ToString(result[3][i])).concat(e.concat(Bytes32ToString(result[5][i]).concat(",")+Bytes32ToString(result[6][i]).concat(",")+Bytes32ToString(result[7][i]).concat(",")).concat(f));
+
+        }
+      }
+      else{
+        console.log("error = ",error);
+      }
+    });
+
+
+
+}
+
+function return_value(a){
+  return "hello"+a;
+}
+
+function Bytes32ToString(bytesarray){
+
+  var str = web3.toAscii(bytesarray);
+  var return_str="";
+  for(var i=0;i<str.length;i++){
+    var a = str[i];
+    var asc = a.charCodeAt(0);
+    if((asc>=97 && asc<=122) || (asc>=65 && asc<=90) || asc==32 || asc==44){
+      return_str+=a;
+    }
+  }
+
+  return return_str;
+}
+
+</script>
+
+      </head>
+
+      <body style="background-image: url(https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQye4Nv0Yu0h64-Mvg-uaHl8SeJUEFi6UdUfxG_TZzs8SowHebY);background-width:100%">
+
+          <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+          <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+          <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+        
+          <div class="card" style="width: 100%;">
+            <div class="card-body">
+              
+              <h5 id="patient_name" class="card-title" style="color:#007bff;">Maitri Thaker</h5>
+              
+              <pre id="patient_desc" class="card-text">                  
+                  Patient id:12345
+                  Address:2/303,Shubham Apts,Thakur Village,Kandivali East,Mumbai
+                  Gender:F
+                  Contact:9871245674
+              </pre>
+              
+            </div>
+          </div>
+        </div>
+        
+          <div class="card-deck" id="cases">
+            <!-- <div class="card"> -->
+              
+<!--               <div class="card-body">
+                <h5 class="card-title" style="color:#007bff;">Malaria</h5>
+                <p class="card-text">
+                  <b>Symptoms:</b>high fever,profuse sweating,headache,nausea,vomiting,abdominal pain,diarrhea,anemia,muscle pain,convulsions,coma,bloody stools
+                  <br>
+                  <b>Consulted doctor:</b>Dr.Lionel Dsuoza
+                  <br>
+                  <a href="file_upload1.html" class="card-link">View records</a>
+
+                </p>
+                <p class="card-text"><small class="text-muted">Date:13/03/2018</small></p>
+              </div>
+            </div> -->
+
+<!--             <div class="card">
+             
+              <div class="card-body">
+                <h5 class="card-title" style="color:#007bff;">Heart Attack</h5>
+                <p class="card-text">
+                  <b>Symptoms:</b>high fever,profuse sweating,headache,nausea,vomiting,abdominal pain,diarrhea,anemia,muscle pain,convulsions,coma,bloody stools
+                  <br>
+
+                  <b>Consulted doctor:</b>Dr.Lionel Dsuoza
+                  <br>
+                  <a href="file_upload1.html" class="card-link">View records</a>
+                </p>
+                <p class="card-text"><small class="text-muted">Date:23/05/2018</small></p>
+              </div>
+            </div>
+            <div class="card">
+              
+              <div class="card-body">
+                <h5 class="card-title" style="color:#007bff;">Fever</h5>
+                <p class="card-text">
+                  <b>Symptoms:</b>high fever,profuse sweating,headache,nausea,vomiting,abdominal pain,diarrhea,anemia,muscle pain,convulsions,coma,bloody stools
+                  <br>
+                  <b>Consulted doctor:</b>Dr.Lionel Dsuoza
+                  <br>
+                  <a href="file_upload1.html" class="card-link">View records</a>
+                </p>
+                <p class="card-text"><small class="text-muted">Date:12/07/2018</small></p>
+              </div>
+            </div> -->
+          </div>
+      </body>
+</html>

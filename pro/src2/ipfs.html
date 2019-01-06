@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>hii</title>
+  <script>
+  var certi;
+  console.log("e.target.result");
+  //var files = $('#file-image').get(0).files[0];
+    console.log("before");
+    var FR = new FileReader();
+    console.log(FR)
+    FR.onloadstart = function(e){
+      $('#file-image').attr('src', e.target.result);
+      //$('#b64').html(e.target.result);
+      certi=e.target.result;
+      certi.toString();
+      console.log(e.target.result);
+      var hash=0,i,chr;
+      for(i=0;i<certi.length;i++)
+      {
+        chr = certi.charCodeAt(i);
+        hash = ((hash << 5)-hash) + chr;
+        hash=0;
+      }
+      console.log(certi)
+      console.log(hash)
+    }
+</script>
+</head>
+<body>
+<!--<div class="row mt-5" id="secret">
+      <div class="card ml-5 shadow-lg p-3 mb-5 bg-white rounded border border-secondary" style="width: 18rem;">-->
+              <img id="file-image" src="test.png" alt="Preview" class="card-img-top">
+            <div class="card-body"><h5 class="card-title"></h5></div></div></div>
+</body>
+</html>
